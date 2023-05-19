@@ -14,7 +14,7 @@ def create_revenus():
     req="CREATE TABLE revenus(id integer primary key, salaire numeric, business varchar)"
     cur.execute(req)
     conn.commit()
-create_revenus()
+create_revenus()"""
 
 def ajouter_depensess():
     loyer = int(input("Veuillez donner la dépense du loyer : "))
@@ -26,28 +26,31 @@ def ajouter_depensess():
 ajouter_depensess()
 
 #Inserer pour revenus
+salaire = int(input("Veuillez entrer votre salaire : "))
+business = int(input("Veuillez indiquer votre revenu business : "))
 def ajouter_revenus():
-    salaire = int(input("Veuillez entrer votre salaire : "))
-    business = int(input("Veuillez indiquer votre revenu business : "))
     req="INSERT INTO revenus(salaire, business) values(?, ?)"
     cur.execute(req,(salaire, business))
     conn.commit()
-ajouter_revenus()"""
+ajouter_revenus()
 
 #execution du depense
 def somme_depensess():
     rows = cur.execute("SELECT * FROM depense").fetchall()
-    print(rows)
-somme_depensess()
+    return rows 
+depenses = somme_depensess()
 
+#initialisation du montant dépenser
+montant_depense = 0
+for depense in depenses:
+    montant_depense += depense[1]
+    
+#definition du somme revenus
 def somme_revenus():
     rows = cur.execute("SELECT * FROM revenus").fetchall()
-    print(rows)
-somme_revenus()
-
-montant_depense = 0
-for depense in somme_depensess():
-    montant_depense += depense[1]
-ecart = somme_revenus - somme_depensess
+    return rows
+somme_revenus_resultat = somme_revenus()
+revenu_total = somme_revenus_resultat[0][0]
+ecart = revenu_total - montant_depense
 
 conn.commit()
