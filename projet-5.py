@@ -38,19 +38,18 @@ ajouter_revenus()
 def somme_depensess():
     rows = cur.execute("SELECT * FROM depense").fetchall()
     return rows 
-depenses = somme_depensess()
+resultat_depenses = somme_depensess()
+print(resultat_depenses)
 
-#initialisation du montant dépenser
 montant_depense = 0
-for depense in depenses:
+for depense in resultat_depenses:
     montant_depense += depense[1]
-    
-#definition du somme revenus
+
 def somme_revenus():
     rows = cur.execute("SELECT * FROM revenus").fetchall()
     return rows
 somme_revenus_resultat = somme_revenus()
-revenu_total = somme_revenus_resultat[0][0]
+revenu_total = somme_revenus_resultat[0][0]  # Accéder à la valeur appropriée dans la liste
 ecart = revenu_total - montant_depense
 
 conn.commit()
